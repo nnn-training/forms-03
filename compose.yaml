@@ -1,9 +1,47 @@
 services:
   app:
     build: .
+    depends_on:
+      mongodb:
+        condition: service_healthy
     tty: true
     ports:
       - 3000:3000
     volumes:
       - .:/app
     working_dir: /app/next-forms
+
+  mongodb:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+      args:
+        DB_MONGO_VERSION: 8.0.9
+    environment:
+      MONGO_REPLICA_HOST: 127.0.0.1
+      MONGO_REPLICA_PORT: 27019
+      MONGO_COMMAND: "mongosh"
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: pass
+      MONGO_INITDB_DATABASE: forms_db
+    ports:
+      - "27019:27019"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "admin",
+          "--port",
+          "27019",
+          "--eval",
+          "db.adminCommand('ping').ok",
+        ]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
