@@ -35,7 +35,7 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ["*.ts", "*.tsx"],
+    files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "no-undef": "off",
     },
