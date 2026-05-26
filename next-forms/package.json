@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@auth/upstash-redis-adapter": "^2.11.2",
@@ -24,6 +25,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
+    "eslint-plugin-import": "^2.32.0",
     "prisma": "^6.19.1",
     "tailwindcss": "^4",
     "typescript": "^5"
